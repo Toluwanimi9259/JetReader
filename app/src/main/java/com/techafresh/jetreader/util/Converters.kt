@@ -1,6 +1,5 @@
 package com.techafresh.jetreader.util
 
-import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.techafresh.jetreader.model.MBook
 

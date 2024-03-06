@@ -91,7 +91,8 @@ fun ReviewScreen(
             ) {
                 navController.popBackStack()
             }
-        }
+        },
+        containerColor = Color.White
     ) {
 
         val bookInfo = produceState<Wrapper<List<MBook>, Boolean, Exception>>(
@@ -106,6 +107,7 @@ fun ReviewScreen(
                 .padding(it)
                 .fillMaxHeight()
                 .fillMaxWidth()
+            , color = Color.White
         ) {
             Column(modifier = Modifier
                 .padding(16.dp)

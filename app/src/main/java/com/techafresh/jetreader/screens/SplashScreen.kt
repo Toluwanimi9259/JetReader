@@ -72,5 +72,5 @@ fun SplashScreen(navController: NavController){
 fun ReaderLogo(modifier: Modifier = Modifier){
     Text(
         modifier = modifier.padding(bottom = 16.dp),
-        text = "Jet-Reader", style = MaterialTheme.typography.headlineMedium, color = Color.Red.copy(alpha = 0.5f))
+        text = "Jet-Reader", style = MaterialTheme.typography.headlineMedium, color = Color(0xFF34A853))
 }

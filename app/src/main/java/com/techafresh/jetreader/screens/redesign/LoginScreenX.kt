@@ -72,7 +72,7 @@ fun LoginScreenX(navController: NavController, viewModel: LoginViewModel = andro
     Scaffold(
 
     ) {
-        Surface(modifier = Modifier.padding(it)) {
+        Surface(modifier = Modifier.padding(it), color = Color.White) {
             UserForm2(
                 title = "Log in",
                 subText = "Welcome back! Log in to resume your reading journey.",

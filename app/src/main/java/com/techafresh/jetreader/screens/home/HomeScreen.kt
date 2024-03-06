@@ -74,7 +74,7 @@ fun Home(navController: NavController, viewModel: HomeScreenViewModel){
     ) {
         Surface(modifier = Modifier
             .padding(it)
-            .fillMaxSize()) {
+            .fillMaxSize(), color = Color.White) {
             Contents(navController = navController, viewModel)
         }
     }
@@ -154,7 +154,6 @@ fun ReadingRightNowArea(books: List<MBook>, navController: NavController, viewMo
         book.startedReading != null && book.finishedReading == null
     }
     HorizontalScrollableComponent(readingNowList) {
-        //TODO: Let's pass an actual book object for simplicity!! NOPE!! Anti-pattern
         navController.navigate(AppScreens.UpdateScreen.name + "/$it")
     }
 }

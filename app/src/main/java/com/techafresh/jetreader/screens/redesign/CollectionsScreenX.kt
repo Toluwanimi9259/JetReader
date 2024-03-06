@@ -15,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -37,14 +38,16 @@ fun CollectionsScreenX(
 
     Scaffold(
         topBar = {
-            AppBarX(title = "Saved Books", icon = Icons.Default.ArrowBack, showProfile = false, navController = navController){
-                navController.navigate(AppScreensX.HomeScreenX.name){
-                    navController.popBackStack()
-                }
+            AppBarX(title = "Saved Books",/* icon = Icons.Default.ArrowBack, */ showProfile = false, navController = navController){
+//                navController.navigate(AppScreensX.HomeScreenX.name){
+//                    navController.popBackStack()
+//                }
             }
-        }
+        },
+        bottomBar = {HomeNav(navController = navController)},
+        contentColor = Color.White
     ) {
-        Surface(modifier = Modifier.padding(it)) {
+        Surface(modifier = Modifier.padding(it), color = Color.White) {
             books = if (!viewModel.data.value.data.isNullOrEmpty()) {
                 viewModel.data.value.data!!
             }else {

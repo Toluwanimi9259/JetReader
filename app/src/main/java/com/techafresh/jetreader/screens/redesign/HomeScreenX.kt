@@ -35,9 +35,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -67,6 +71,7 @@ import com.techafresh.jetreader.screens.home.HomeScreenViewModel
 import com.techafresh.jetreader.screens.home.TitleSection
 import com.techafresh.jetreader.screens.search.BookRow
 import com.techafresh.jetreader.screens.search.SearchViewModel
+import kotlin.random.Random
 
 @Composable
 fun HomeScreenX(navController: NavController, viewModel: HomeScreenViewModel = hiltViewModel(), searchViewModel: SearchViewModel = hiltViewModel()){
@@ -79,14 +84,16 @@ fun HomeScreenX(navController: NavController, viewModel: HomeScreenViewModel = h
                  },
         bottomBar = {
             HomeNav(navController = navController)
-        }
+        },
+        containerColor = Color.White
     ) {
         val scrollState = rememberScrollState()
         Surface(
             modifier = Modifier
                 .padding(it)
                 .fillMaxSize()
-                .verticalScroll(scrollState)
+                .verticalScroll(scrollState),
+            color = Color.White
         ) {
             var listOfBooks = emptyList<MBook>()
             val currentUserName = if (!(FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty())) FirebaseAuth.getInstance().currentUser?.email?.split("@")?.get(0) else "N/A"
@@ -107,16 +114,17 @@ fun HomeScreenX(navController: NavController, viewModel: HomeScreenViewModel = h
                         .padding(start = 25.dp)
                 ) {
                     Title("Recommended For You", "Handpicked based on your reading preferences")
-                    Ja(searchViewModel = searchViewModel, navController = navController)
-                    Title("Latest Releases", "Newly released books spanning various genres.")
-                    HoriScroll(books = listOfBooks) {
+//                    Ja(searchViewModel = searchViewModel, navController = navController)
+                    RecommendedList(searchViewModel = searchViewModel, navController = navController)
+                    Title("Reading List", "Books you have started reading...")
+                    HoriScroll(books = listOfBooks.filter {
+                        it.startedReading != null && it.finishedReading == null
+                    }) {
                         navController.navigate(AppScreensX.DetailsScreenX.name +  "/$it")
                     }
+
                 }
             }
-
-//            Content(books = searchViewModel.list)
-
         }
     }
 }
@@ -136,6 +144,107 @@ fun Ja(searchViewModel: SearchViewModel, navController: NavController){
             }
         }
     }
+}
+
+@Composable
+fun RecommendedList(searchViewModel: SearchViewModel, navController: NavController){
+    val randIndex = Random.nextInt(0,9)
+    val reList = remember(searchViewModel.list , searchViewModel.adventureList , searchViewModel.mysteryList , searchViewModel.fantasyList , searchViewModel.dystopianList , searchViewModel.thrillerList, searchViewModel.fictionList, searchViewModel.horrorList) {
+        mutableStateOf(listOf(
+            searchViewModel.list[generateRandomNumber(0,5)],
+            searchViewModel.adventureList[generateRandomNumber(0,5)],
+            searchViewModel.dystopianList[generateRandomNumber(0,5)],
+            searchViewModel.fantasyList[generateRandomNumber(0,5)],
+            searchViewModel.mysteryList[generateRandomNumber(0,5)],
+            searchViewModel.thrillerList[generateRandomNumber(0,5)],
+//            searchViewModel.fictionList[randIndex],
+            searchViewModel.horrorList[generateRandomNumber(0,5)],
+            searchViewModel.list[generateRandomNumber(6,10)],
+            searchViewModel.adventureList[generateRandomNumber(6,10)],
+            searchViewModel.mysteryList[generateRandomNumber(6,10)],
+            searchViewModel.fantasyList[generateRandomNumber(6,10)],
+            searchViewModel.dystopianList[generateRandomNumber(6,10)],
+            searchViewModel.thrillerList[generateRandomNumber(6,10)],
+//            searchViewModel.fictionList[randIndex],
+            searchViewModel.horrorList[generateRandomNumber(6,10)],
+            searchViewModel.list[generateRandomNumber(11,15)],
+            searchViewModel.adventureList[generateRandomNumber(11,15)],
+            searchViewModel.mysteryList[generateRandomNumber(11,15)],
+            searchViewModel.fantasyList[generateRandomNumber(11,15)],
+            searchViewModel.dystopianList[generateRandomNumber(11,15)],
+            searchViewModel.thrillerList[generateRandomNumber(11,15)],
+//            searchViewModel.fictionList[randIndex],
+            searchViewModel.horrorList[generateRandomNumber(11,15)],
+
+            searchViewModel.list[generateRandomNumber(16,20)],
+            searchViewModel.adventureList[generateRandomNumber(16,20)],
+            searchViewModel.mysteryList[generateRandomNumber(16,20)],
+            searchViewModel.fantasyList[generateRandomNumber(16,20)],
+            searchViewModel.dystopianList[generateRandomNumber(16,20)],
+            searchViewModel.thrillerList[generateRandomNumber(16,20)],
+//            searchViewModel.fictionList[randIndex],
+            searchViewModel.horrorList[generateRandomNumber(16,20)],
+
+            searchViewModel.horrorList[generateRandomNumber(21,25)],
+            searchViewModel.list[generateRandomNumber(21,25)],
+            searchViewModel.adventureList[generateRandomNumber(21,25)],
+            searchViewModel.mysteryList[generateRandomNumber(21,25)],
+            searchViewModel.fantasyList[generateRandomNumber(21,25)],
+            searchViewModel.dystopianList[generateRandomNumber(21,25)],
+            searchViewModel.thrillerList[generateRandomNumber(21,25)],
+//            searchViewModel.fictionList[randIndex],
+            searchViewModel.horrorList[generateRandomNumber(21,25)],
+
+            searchViewModel.horrorList[generateRandomNumber(26,30)],
+            searchViewModel.list[generateRandomNumber(26,30)],
+            searchViewModel.adventureList[generateRandomNumber(26,30)],
+            searchViewModel.mysteryList[generateRandomNumber(26,30)],
+            searchViewModel.fantasyList[generateRandomNumber(26,30)],
+            searchViewModel.dystopianList[generateRandomNumber(26,30)],
+            searchViewModel.thrillerList[generateRandomNumber(26,30)],
+//            searchViewModel.fictionList[randIndex],
+            searchViewModel.horrorList[generateRandomNumber(26,30)],
+
+            searchViewModel.horrorList[generateRandomNumber(31,35)],
+            searchViewModel.list[generateRandomNumber(31,35)],
+            searchViewModel.adventureList[generateRandomNumber(31,35)],
+            searchViewModel.mysteryList[generateRandomNumber(31,35)],
+            searchViewModel.fantasyList[generateRandomNumber(31,35)],
+            searchViewModel.dystopianList[generateRandomNumber(31,35)],
+            searchViewModel.thrillerList[generateRandomNumber(31,35)],
+//            searchViewModel.fictionList[randIndex],
+            searchViewModel.horrorList[generateRandomNumber(31,35)],
+
+            searchViewModel.horrorList[generateRandomNumber(36,40)],
+            searchViewModel.list[generateRandomNumber(36,40)],
+            searchViewModel.adventureList[generateRandomNumber(36,40)],
+            searchViewModel.mysteryList[generateRandomNumber(36,40)],
+            searchViewModel.fantasyList[generateRandomNumber(36,40)],
+            searchViewModel.dystopianList[generateRandomNumber(36,40)],
+            searchViewModel.thrillerList[generateRandomNumber(36,40)],
+//            searchViewModel.fictionList[randIndex],
+            searchViewModel.horrorList[generateRandomNumber(36,40)],
+
+        ))
+    }
+    Log.d("TAG", "RecommendedList: ${reList.value}")
+    LazyRow(modifier = Modifier
+        .fillMaxWidth()
+        .height(400.dp),
+    ) {
+        items(items = reList.value.shuffled()
+//            .filter {
+//            it.volumeInfo.imageLinks.smallThumbnail != null
+            /*}*/) {
+            BookColumn(book = it, navController = navController){
+                navController.navigate(AppScreensX.DetailsScreenX.name +  "/$it")
+            }
+        }
+    }
+}
+
+fun generateRandomNumber(start : Int , end : Int) : Int{
+    return Random.nextInt(start , end)
 }
 
 
@@ -168,11 +277,12 @@ fun BookColumn(
         Log.d("TAG", "BookColumn: ${book.volumeInfo.imageLinks}")
         AsyncImage(
             modifier = Modifier
-                .height(251.dp)
+                .height(270.dp)
                 .fillMaxWidth(1f)
                 .clip(RoundedCornerShape(5.dp)),
-            model = if (book.volumeInfo.imageLinks.toString().isEmpty()) "https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=80&q=80" else book.volumeInfo.imageLinks.smallThumbnail,
-            contentDescription = null
+            model = if (book.volumeInfo.imageLinks == null) "https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=80&q=80" else book.volumeInfo.imageLinks.smallThumbnail,
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds
         )
 
         Text(
@@ -185,6 +295,7 @@ fun BookColumn(
             fontFamily = interFamily,
             overflow = TextOverflow.Ellipsis,
             color = Color(0xFF0D0842),
+            maxLines = 1,
             textAlign = TextAlign.Left
         )
 
@@ -202,29 +313,6 @@ fun BookColumn(
             maxLines = 2,
         )
     }
-}
-
-
-//@Preview
-@Composable
-fun Content(
-    books : List<MBook>
-){
-//    Surface(
-//        modifier = Modifier.fillMaxSize(1f)
-//    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize(1f)
-                .padding(start = 25.dp)
-        ) {
-//            Title( "Recommended For You")
-
-//            HoriScroll(books = books){}
-//            Title( "Latest Releases")
-            HoriScroll(books = books){}
-        }
-//    }
 }
 
 @Composable

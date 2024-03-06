@@ -27,6 +27,7 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -214,8 +215,9 @@ fun DetailContent(
 
         Surface(modifier = Modifier
             .height(295.dp)
-            .width(217.dp), shape = RoundedCornerShape(5.dp)) {
+            .width(217.dp)) {
             AsyncImage(
+                modifier = Modifier.clip(RoundedCornerShape(5.dp)),
                 model = bookData?.imageLinks?.thumbnail.toString(),
                 contentDescription = null
             )

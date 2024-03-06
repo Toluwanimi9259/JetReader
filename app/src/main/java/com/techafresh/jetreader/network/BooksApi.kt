@@ -13,7 +13,10 @@ interface BooksApi {
     @GET("volumes")
     suspend fun getAllBooks(
         @Query("q")
-        query : String
+        query: String,
+
+        @Query("maxResults")
+        maxResults: Int = 40
     ) : Book
 
     @GET("volumes/{bookId}")

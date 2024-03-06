@@ -6,14 +6,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.play.integrity.internal.q
 import com.techafresh.jetreader.model.Item
 import com.techafresh.jetreader.repo.BookRepo
 import com.techafresh.jetreader.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -57,34 +53,28 @@ class SearchViewModel @Inject constructor(private val repo : BookRepo) : ViewMod
     }
 
     private fun loadBooks() {
-        searchFiction("Romance")
-        searchBooks("Android")
+        searchAdventure("Romance")
+        searchFiction("Fiction")
         searchHorror("Horror")
         searchMystery("Mystery")
-        searchAdventure("Adventure")
         searchSelfHelp("selfhelp")
         searchBiography("Biography")
         searchDystopian("Dystopian")
         searchCooking("Cooking")
         searchFantasy("Fantasy")
         searchThriller("Thriller")
+        searchBooks("Science Fiction")
     }
 
     fun searchBooks(query: String) {
         viewModelScope.launch {
             if (query.isEmpty()) return@launch
             try {
+                Log.d("GNCC", "searchBooks: Running")
                 when (val response = repo.getBooks(query)) {
                     is Resource.Success -> {
-                        Log.d(
-                            "MainViewModel",
-                            "fetchBooks: Success ${response.data?.get(0)?.volumeInfo}"
-                        )
+                        Log.d("GNCC", "searchBooks: Size = ${list.size}")
                         list = response.data!!
-                        Log.d(
-                            "MainViewModel",
-                            "fetchBooks: Success ${response.data?.get(0)?.volumeInfo}"
-                        )
                         if (list.isNotEmpty()) isLoading.value = false
                     }
 
@@ -104,20 +94,12 @@ class SearchViewModel @Inject constructor(private val repo : BookRepo) : ViewMod
         viewModelScope.launch {
             if (query.isEmpty()) return@launch
             try {
+                Log.d("GNCC", "searchFiction: Running")
                 when (val response = repo.getBooks(query)) {
                     is Resource.Success -> {
 
-                        Log.d(
-                            "Search Fiction",
-                            "fetchBooks: Success ${response.data?.get(0)?.volumeInfo}"
-                        )
-
                         fictionList = response.data!!
-
-                        Log.d(
-                            "Search Fiction",
-                            "fetchBooks: Success $fictionList"
-                        )
+                        Log.d("GNCC", "searchFiction: Size = ${fictionList.size}")
                         if (fictionList.isNotEmpty()) fictionIsLoading.value = false
 
                     }
@@ -139,13 +121,11 @@ class SearchViewModel @Inject constructor(private val repo : BookRepo) : ViewMod
         viewModelScope.launch {
             if (query.isEmpty()) return@launch
             try {
+                Log.d("GNCC", "searchHorror: Running")
                 when (val response = repo.getBooks(query)) {
                     is Resource.Success -> {
                         horrorList = response.data!!
-                        Log.d(
-                            "Search Fiction",
-                            "fetchBooks: Success ${response.data?.get(0)?.volumeInfo}"
-                        )
+                        Log.d("GNCC", "searchHorror: Size = ${horrorList.size}")
                         if (horrorList.isNotEmpty()) horrorIsLoading.value = false
                     }
 
@@ -167,13 +147,11 @@ class SearchViewModel @Inject constructor(private val repo : BookRepo) : ViewMod
         viewModelScope.launch {
             if (query.isEmpty()) return@launch
             try {
+                Log.d("GNCC", "searchMystery: Running")
                 when (val response = repo.getBooks(query)) {
                     is Resource.Success -> {
                         mysteryList = response.data!!
-                        Log.d(
-                            "Search Fiction",
-                            "fetchBooks: Success ${response.data?.get(0)?.volumeInfo}"
-                        )
+                        Log.d("GNCC", "searchMystery: Size = ${mysteryList.size}")
                         if (mysteryList.isNotEmpty()) mysteryIsLoading.value = false
                     }
 
@@ -195,13 +173,11 @@ class SearchViewModel @Inject constructor(private val repo : BookRepo) : ViewMod
         viewModelScope.launch {
             if (query.isEmpty()) return@launch
             try {
+                Log.d("GNCC", "searchADv: Running")
                 when (val response = repo.getBooks(query)) {
                     is Resource.Success -> {
                         adventureList = response.data!!
-                        Log.d(
-                            "Search Adventure",
-                            "fetchBooks: Success ${response.data?.get(0)?.volumeInfo}"
-                        )
+                        Log.d("GNCC", "searchAdv: Size = ${adventureList.size}")
                         if (adventureList.isNotEmpty()) adventureIsLoading.value = false
                     }
 
@@ -223,13 +199,11 @@ class SearchViewModel @Inject constructor(private val repo : BookRepo) : ViewMod
         viewModelScope.launch {
             if (query.isEmpty()) return@launch
             try {
+                Log.d("GNCC", "searchBio: Running")
                 when (val response = repo.getBooks(query)) {
                     is Resource.Success -> {
                         biographyList = response.data!!
-                        Log.d(
-                            "Search Biography",
-                            "fetchBooks: Success ${response.data?.get(0)?.volumeInfo}"
-                        )
+                        Log.d("GNCC", "searchBio: Size = ${biographyList.size}")
                         if (biographyList.isNotEmpty()) biographyIsLoading.value = false
                     }
 
@@ -250,6 +224,7 @@ class SearchViewModel @Inject constructor(private val repo : BookRepo) : ViewMod
         viewModelScope.launch {
             if (query.isEmpty()) return@launch
             try {
+                Log.d("GNCC", "searchCooking: Running")
                 when (val response = repo.getBooks(query)) {
                     is Resource.Success -> {
                         cookingList = response.data!!
@@ -277,13 +252,11 @@ class SearchViewModel @Inject constructor(private val repo : BookRepo) : ViewMod
         viewModelScope.launch {
             if (query.isEmpty()) return@launch
             try {
+                Log.d("GNCC", "searchDystopian: Running")
                 when (val response = repo.getBooks(query)) {
                     is Resource.Success -> {
                         dystopianList = response.data!!
-                        Log.d(
-                            "Search Dystopian",
-                            "fetchBooks: Success ${response.data?.get(0)?.volumeInfo}"
-                        )
+                        Log.d("GNCC", "searchDyst: Size = ${dystopianList.size}")
                         if (dystopianList.isNotEmpty()) dystopianIsLoading.value = false
                     }
 
@@ -304,13 +277,11 @@ class SearchViewModel @Inject constructor(private val repo : BookRepo) : ViewMod
         viewModelScope.launch {
             if (query.isEmpty()) return@launch
             try {
+                Log.d("GNCC", "searchThriller: Running")
                 when (val response = repo.getBooks(query)) {
                     is Resource.Success -> {
                         thrillerList = response.data!!
-                        Log.d(
-                            "Search Thriller",
-                            "fetchBooks: Success ${response.data?.get(0)?.volumeInfo}"
-                        )
+                        Log.d("GNCC", "searchThriller: Size = ${thrillerList.size}")
                         if (thrillerList.isNotEmpty()) thrillerIsLoading.value = false
                     }
 
@@ -331,13 +302,11 @@ class SearchViewModel @Inject constructor(private val repo : BookRepo) : ViewMod
         viewModelScope.launch {
             if (query.isEmpty()) return@launch
             try {
+                Log.d("GNCC", "searchFantasy: Running")
                 when (val response = repo.getBooks(query)) {
                     is Resource.Success -> {
                         fantasyList = response.data!!
-                        Log.d(
-                            "Search Fantasy",
-                            "fetchBooks: Success ${response.data?.get(0)?.volumeInfo}"
-                        )
+                        Log.d("GNCC", "searchFantasy: Size = ${fantasyList.size}")
                         if (fantasyList.isNotEmpty()) fantasyIsLoading.value = false
                     }
 

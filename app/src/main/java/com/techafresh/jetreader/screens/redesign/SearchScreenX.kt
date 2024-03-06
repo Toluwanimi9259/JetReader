@@ -54,6 +54,7 @@ import com.techafresh.jetreader.navigation.AppScreens
 import com.techafresh.jetreader.navigation.redesign.AppScreensX
 import com.techafresh.jetreader.screens.home.AppBarX
 import com.techafresh.jetreader.screens.search.SearchViewModel
+import kotlin.random.Random
 
 @Composable
 fun SearchScreenX(
@@ -65,19 +66,21 @@ fun SearchScreenX(
             AppBarX(
                 title = "Explore",
                 navController = navController,
-                icon = Icons.Default.ArrowBack,
+//                icon = Icons.Default.ArrowBack,
                 showProfile = false
             ){
-                navController.navigate(AppScreensX.HomeScreenX.name){
-                    navController.popBackStack()
-                }
+//                navController.navigate(AppScreensX.HomeScreenX.name){
+//                    navController.popBackStack()
+//                }
             }
-        }
+        },
+        bottomBar = {HomeNav(navController = navController)},
+        containerColor = Color.White
     ) {
         val scrollState = rememberScrollState()
         Surface(modifier = Modifier
             .padding(it)
-            .verticalScroll(scrollState)) {
+            .verticalScroll(scrollState), color = Color.White) {
             Column {
                 ExploreList(searchViewModel = viewModel, navController = navController)
             }
@@ -86,29 +89,28 @@ fun SearchScreenX(
 }
 
 @Composable
-fun Ja2(searchViewModel: SearchViewModel,navController: NavController,  books : List<Item> , loader : Boolean = true){
+fun Ja2(searchViewModel: SearchViewModel,navController: NavController,  books : List<Item> , loader : Boolean = true) {
 //    if (searchViewModel.fictionIsLoading.value){
 //        LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
 //    }else{
-        Log.d("JA2", "Ja2: List = $books")
-        LazyRow(modifier = Modifier
+    Log.d("JA2", "Ja2: List = $books")
+    LazyRow(
+        modifier = Modifier
             .fillMaxWidth()
             .height(400.dp),
-        ) {
-            items(items = books
-                .filter {
+    ) {
+        items(items = books.shuffled()
+            .filter {
                 it.volumeInfo.imageLinks != null
             }
-            ) {
-                BookColumn(book = it, navController = navController){
-                    navController.navigate(AppScreensX.DetailsScreenX.name +  "/$it")
-                }
+        ) {
+            BookColumn(book = it, navController = navController) {
+                navController.navigate(AppScreensX.DetailsScreenX.name + "/$it")
             }
+        }
 //        }
     }
-
 }
-
 
 @Composable
 fun ExploreList(searchViewModel: SearchViewModel, navController: NavController){

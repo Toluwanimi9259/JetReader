@@ -7,6 +7,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -58,7 +59,7 @@ fun SplashScreenX(navController: NavController){
         color = Color.White,
         border = BorderStroke(width = 2.dp, color = Color.LightGray)
     ) {
-        Column(modifier = Modifier.padding(1.dp),
+        Column(modifier = Modifier.padding(1.dp).fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center) {
 
