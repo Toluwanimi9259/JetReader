@@ -1,2 +1,2 @@
 # JetReader
-A Book-Reading App
+A Book-Reading App Made with Jetpack Compose
